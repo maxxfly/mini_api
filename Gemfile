@@ -25,7 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 group :development do
-  gem 'annotate',             require: false      # generate comments on models with attributes and useful info
+  gem 'annotate', git: 'https://github.com/ctran/annotate_models.git'
 end
 
 group :development, :test do
@@ -38,8 +38,7 @@ end
 
 group :test do
   gem 'rspec-rails'
-  gem 'shoulda-matchers'                    # Add rspec matchers for models
-  gem 'shoulda-callback-matchers'           # More matchers for rspec!
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5' # Add rspec matchers for models
   gem 'factory_girl_rails'
-
+  gem 'faker'
 end
