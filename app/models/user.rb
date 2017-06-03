@@ -19,4 +19,20 @@ class User < ActiveRecord::Base
   validates :address_line_1, presence: true, length: { maximum: 50 }
   validates :dob, presence: true
 
+  def age
+    now = Time.now.utc.to_date
+    now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+  end
+
+  def as_json(options={})
+    { name: first_name + " " + last_name,
+      first_name: first_name,
+      last_name: last_name,
+      address_line_1: address_line_1,
+      dob: dob,
+      age: age
+
+    }
+  end
+
 end
