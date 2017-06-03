@@ -1,0 +1,52 @@
+swagger: '2.0'
+info:
+  description: Interactive Documentation
+  version: '2.0'
+  title: Ota
+  contact:
+    name: JeanMary LECOUTEUX
+    email: jeanmary@gmail.com
+consumes:
+- multipart/form-data
+- application/x-www-form-urlencoded
+produces:
+- application/json; version=2.0
+
+schemes:
+- http
+
+basePath: /
+
+paths:
+  /users:
+    get:
+      tags:
+      - user
+      summary: "List all users"
+      parameters:
+
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/UsersResponse'
+
+
+definitions:
+  UsersResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        name:
+          type: string
+        dob:
+          type: date
+        age:
+          type: integer
+        address_line_1:
+          type: string
