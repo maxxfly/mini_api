@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170602203549) do
+ActiveRecord::Schema.define(version: 20170603163810) do
+
+  create_table "transfers", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "account_number_from", null: false
+    t.string "account_number_to", null: false
+    t.integer "amount_pennies"
+    t.string "country_code_from", null: false
+    t.string "country_code_to", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name", null: false

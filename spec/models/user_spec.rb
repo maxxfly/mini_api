@@ -26,6 +26,8 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_length_of(:last_name).is_at_most(20) }
     it { is_expected.to validate_length_of(:address_line_1).is_at_most(50) }
 
+    it { is_expected.to have_many(:transfers) }
+
   end
 
 end
