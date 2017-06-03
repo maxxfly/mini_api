@@ -30,6 +30,47 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/UsersResponse'
+
+    post:
+      tags:
+      - user
+      summary: "Create an user"
+      parameters:
+      - first_name:
+        name: first_name
+        in: query
+        type: string
+        required: true
+
+      - last_name:
+        name: last_name
+        in: query
+        type: string
+        required: true
+
+      - dob:
+        name: dob
+        in: query
+        type: string
+        format: date
+        required: true
+
+      - address_line_1:
+        name: address_line_1
+        in: query
+        type: string
+        required: true
+
+      responses:
+        201:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/UserResponse'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
   /users/{id}:
     get:
       tags:
@@ -82,7 +123,8 @@ definitions:
         name:
           type: string
         dob:
-          type: date
+          type: string
+          format: date
         age:
           type: integer
         address_line_1:
@@ -98,11 +140,20 @@ definitions:
       name:
         type: string
       dob:
-        type: date
+        type: string
+        format: date
       age:
         type: integer
       address_line_1:
         type: string
+
+  ErrorResponse:
+    type: object
+    properties:
+      errors:
+        type: array
+        items:
+          type: string
 
   NotFoundResponse:
     type: object
