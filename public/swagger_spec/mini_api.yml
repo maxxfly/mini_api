@@ -30,6 +30,25 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/UsersResponse'
+  /users/{id}:
+    get:
+      tags:
+      - user
+      summary: "Get info for a single user"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/UserResponse'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/NotFoundResponse'
 
 
 definitions:
@@ -50,3 +69,26 @@ definitions:
           type: integer
         address_line_1:
           type: string
+
+  UserResponse:
+    type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      name:
+        type: string
+      dob:
+        type: date
+      age:
+        type: integer
+      address_line_1:
+        type: string
+
+  NotFoundResponse:
+    type: object
+    properties:
+      message:
+        type: string
+        example: 'Not Found'
