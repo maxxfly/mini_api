@@ -49,6 +49,24 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/NotFoundResponse'
+    delete:
+      tags:
+      - user
+      summary: "Destroy a single user"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      responses:
+        204:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/DeletedResponse'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/NotFoundResponse'
 
 
 definitions:
@@ -92,3 +110,10 @@ definitions:
       message:
         type: string
         example: 'Not Found'
+
+  DeletedResponse:
+    type: object
+    properties:
+      message:
+        type: string
+        example: 'Deleted'

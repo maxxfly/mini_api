@@ -52,4 +52,18 @@ RSpec.describe UsersController do
 
   end
 
+  describe '#destroy' do
+    let!(:user) { create :user, first_name: 'JeanMary', last_name: 'LECOUTEUX', address_line_1: '6 avenue victor hugo', dob: '1978-10-17'}
+
+    subject(:call_method) do
+      delete :destroy, { params: { id: user.id }}
+      JSON.parse(response.body, symbolize_names: true)
+    end
+
+    it do
+      expect(subject[:message]).to eql 'Deleted'
+      expect(User.all.count).to eql 0
+    end
+  end
+
 end
