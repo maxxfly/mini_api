@@ -21,5 +21,12 @@ class Transfer < ActiveRecord::Base
   validates :country_code_from, presence: true, length: { is: 3 }
   validates :country_code_to, presence: true, length: { is: 3 }
 
-
+  def as_json(options={})
+    { account_number_from: account_number_from,
+      account_number_to: account_number_to,
+      amount_pennies: amount_pennies,
+      country_code_from: country_code_from,
+      country_code_to: country_code_to
+    }
+  end
 end

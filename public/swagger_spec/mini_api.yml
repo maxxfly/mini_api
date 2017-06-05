@@ -155,6 +155,49 @@ paths:
           schema:
             $ref: '#/definitions/NotFoundResponse'
 
+  /users/{user_id}/transfers:
+    get:
+      tags:
+      - transfer
+      summary: "List user's transfers"
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/TransfersResponse'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/NotFoundResponse'
+
+  /users/{user_id}/transfers/{id}:
+    get:
+      tags:
+      - transfer
+      summary: "List user's transfers"
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        type: integer
+      - name: id
+        in: path
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/TransferResponse'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/NotFoundResponse'
 
 definitions:
   UsersResponse:
@@ -192,6 +235,38 @@ definitions:
         type: integer
       address_line_1:
         type: string
+
+  TransfersResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        account_number_from:
+          type: string
+        account_number_to:
+          type: string
+        country_code_from:
+          type: string
+        country_code_to:
+          type: string
+        amount_pennies:
+          type: number
+          format: float
+
+  TransferResponse:
+    type: object
+    properties:
+      account_number_from:
+        type: string
+      account_number_to:
+        type: string
+      country_code_from:
+        type: string
+      country_code_to:
+        type: string
+      amount_pennies:
+        type: number
+        format: float
 
   ErrorResponse:
     type: object
