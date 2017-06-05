@@ -24,6 +24,17 @@ class UsersController < ActionController::Base
   end
 
   def update
+    @user = User.find_by_id(params[:id])
+
+    if @user
+      if @user.update_attributes(user_params)
+        render json: @user
+      else
+        render json: { errors: @user.errors }, status: 400
+      end
+    else
+      render json: { message: "Not found"}, status: 404
+    end
   end
 
   def destroy

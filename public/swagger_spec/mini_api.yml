@@ -66,8 +66,8 @@ paths:
           description: Successful operation
           schema:
             $ref: '#/definitions/UserResponse'
-        404:
-          description: Not found
+        400:
+          description: Bad request
           schema:
             $ref: '#/definitions/ErrorResponse'
 
@@ -90,6 +90,52 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/NotFoundResponse'
+
+    patch:
+      tags:
+      - user
+      summary: "Update an user"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+
+      - first_name:
+        name: first_name
+        in: query
+        type: string
+
+      - last_name:
+        name: last_name
+        in: query
+        type: string
+
+      - dob:
+        name: dob
+        in: query
+        type: string
+        format: date
+
+      - address_line_1:
+        name: address_line_1
+        in: query
+        type: string
+
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/UserResponse'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/NotFoundResponse'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
     delete:
       tags:
       - user

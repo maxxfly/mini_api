@@ -120,7 +120,34 @@ RSpec.describe UsersController do
       it { expect(subject[:errors][:dob].length).to eql 1}
       it { expect(subject[:errors][:dob].first).to include "can't be blank" }
 
+    end
+  end
 
+  describe '#update' do
+    let!(:user) { create :user, first_name: 'JeanMary', last_name: 'LECOUTEUX', address_line_1: '6 avenue victor hugo', dob: '1978-10-17'}
+
+    before do
+      # Fix the time for the test about the age still OK
+      t = Time.local(2017, 1, 1, 0, 0, 0)
+      Timecop.travel(t)
+    end
+
+    context "perfect case" do
+      subject(:call_method) do
+        patch :update, { params: { id: user.id, first_name: "Hello", last_name: "World" }}
+        JSON.parse(response.body, symbolize_names: true)
+      end
+
+      it { expect(User.count).to eql 1}
+      it { expect(subject[:first_name]).to eql 'Hello' }
+      it { expect(subject[:last_name]).to eql 'World' }
+      it { expect(subject[:name]).to eql 'Hello World' }
+      it { expect(subject).not_to include :id }
+
+      it { expect(subject[:address_line_1]).to eql '6 avenue victor hugo' }
+
+      it { expect(subject[:dob]).to eql '1978-10-17' }
+      it { expect(subject[:age]).to eql 38 }
     end
   end
 
