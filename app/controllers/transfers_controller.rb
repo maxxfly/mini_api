@@ -10,6 +10,16 @@ class TransfersController < ActionController::Base
     render json: @transfer
   end
 
+  def create
+    @transfer = @user.transfers.build(transfer_params)
+
+    if @transfer.save
+      render json: @transfer
+    else
+      render json: { errors: @transfer.errors }, status: 400
+    end
+  end
+
   def update
     if @transfer.update_attributes(transfer_params)
       render json: @transfer

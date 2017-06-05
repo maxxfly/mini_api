@@ -73,6 +73,64 @@ RSpec.describe TransfersController do
     end
   end
 
+  describe '#create' do
+    context "perfect case" do
+      subject(:call_method) do
+        post :create, { params: { user_id: user1.id, account_number_from: "C" * 18, account_number_to: "D" * 18,
+                                                     country_code_from: 'GBR', country_code_to: 'GBR',
+                                                     amount_pennies: 123 }}
+
+        JSON.parse(response.body, symbolize_names: true)
+      end
+
+      it do
+        expect(subject[:account_number_from]).to eql "C" * 18
+        expect(subject[:account_number_to]).to eql "D" * 18
+        expect(subject[:country_code_from]).to eql 'GBR'
+        expect(subject[:country_code_to]).to eql 'GBR'
+        expect(subject[:amount_pennies]).to eql 123
+
+        expect(Transfer.first.user_id).to eql user1.id
+
+        expect(subject).not_to include :id
+        expect(subject).not_to include :user_id
+
+        expect(Transfer.all.count).to eql 1
+      end
+    end
+
+    context "with errors" do
+      subject(:call_method) do
+        post :create, { params: { user_id: user1.id, account_number_from: "C" * 16, account_number_to: "D" * 20,
+                                                     country_code_from: 'GB', country_code_to: 'GBRA' }}
+
+        JSON.parse(response.body, symbolize_names: true)
+      end
+
+      it { expect(subject).to include :errors }
+
+      it { expect(subject[:errors]).to include :account_number_from }
+      it { expect(subject[:errors][:account_number_from].length).to eql 1}
+      it { expect(subject[:errors][:account_number_from].first).to include "is the wrong length" }
+
+      it { expect(subject[:errors]).to include :account_number_to }
+      it { expect(subject[:errors][:account_number_from].length).to eql 1}
+      it { expect(subject[:errors][:account_number_from].first).to include "is the wrong length" }
+
+      it { expect(subject[:errors]).to include :country_code_from }
+      it { expect(subject[:errors][:country_code_from].length).to eql 1}
+      it { expect(subject[:errors][:country_code_from].first).to include "is the wrong length" }
+
+      it { expect(subject[:errors]).to include :country_code_to }
+      it { expect(subject[:errors][:country_code_to].length).to eql 1}
+      it { expect(subject[:errors][:country_code_to].first).to include "is the wrong length" }
+
+      it { expect(subject[:errors]).to include :amount_pennies }
+      it { expect(subject[:errors][:amount_pennies].length).to eql 1}
+      it { expect(subject[:errors][:amount_pennies].first).to include "is not a number" }
+    end
+  end
+
   describe '#update' do
     let!(:transfer) { create :transfer, user_id: user1.id }
 

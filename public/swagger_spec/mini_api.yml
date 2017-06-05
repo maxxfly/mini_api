@@ -175,6 +175,57 @@ paths:
           schema:
             $ref: '#/definitions/NotFoundResponse'
 
+    post:
+      tags:
+      - transfer
+      summary: "Create a transfer for this user"
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        type: integer
+
+      - account_number_from:
+        name: account_number_from
+        in: query
+        type: string
+        required: true
+
+      - account_number_to:
+        name: account_number_to
+        in: query
+        type: string
+        required: true
+
+      - country_code_from:
+        name: country_code_from
+        in: query
+        type: string
+        required: true
+
+      - country_code_to:
+        name: country_code_to
+        in: query
+        type: string
+        required: true
+
+      - amount_pennies:
+        name: amount_pennies
+        in: query
+        type: number
+        format: float
+        required: true
+
+      responses:
+        201:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/TransferResponse'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
   /users/{user_id}/transfers/{id}:
     get:
       tags:
