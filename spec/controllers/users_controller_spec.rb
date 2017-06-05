@@ -115,7 +115,6 @@ RSpec.describe UsersController do
       it { expect(subject[:errors][:address_line_1].length).to eql 1}
       it { expect(subject[:errors][:address_line_1].first).to include "too long" }
 
-
       it { expect(subject[:errors]).to include :dob }
       it { expect(subject[:errors][:dob].length).to eql 1}
       it { expect(subject[:errors][:dob].first).to include "can't be blank" }
