@@ -15,6 +15,7 @@ require 'faker'
 
 FactoryGirl.define do
   factory :user do
+    username { Faker::Internet.user_name }
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     address_line_1 { Faker::Address.street_address }

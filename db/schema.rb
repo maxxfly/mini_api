@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170603163810) do
+ActiveRecord::Schema.define(version: 20170605193333) do
 
   create_table "transfers", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(version: 20170603163810) do
     t.date "dob", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "username"
+    t.string "encrypted_password", default: "", null: false
+    t.string "authentication_token"
   end
 
 end

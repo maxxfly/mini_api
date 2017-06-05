@@ -18,6 +18,34 @@ schemes:
 basePath: /
 
 paths:
+  /sessions:
+    post:
+      tags:
+      - session
+      summary: "Identify the user and get his token"
+      parameters:
+      - username:
+        name: username
+        type: string
+        in: query
+        required: true
+      - password:
+        name: password
+        type: string
+        in: query
+        required: true
+
+      responses:
+        201:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/TokenResponse'
+        401:
+          description: Unknown user
+          schema:
+            $ref: '#/definitions/UnauthorizedResponse'
+
+
   /users:
     get:
       tags:
@@ -329,6 +357,12 @@ paths:
             $ref: '#/definitions/NotFoundResponse'
 
 definitions:
+  TokenResponse:
+    type: object
+    properties:
+      auth_token:
+        type: string
+
   UsersResponse:
     type: array
     items:
@@ -418,3 +452,10 @@ definitions:
       message:
         type: string
         example: 'Deleted'
+
+  UnauthorizedResponse:
+    type: object
+    properties:
+      message:
+        type: string
+        example: 'Unauthorized'
