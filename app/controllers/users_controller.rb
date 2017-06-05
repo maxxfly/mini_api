@@ -28,10 +28,10 @@ class UsersController < ActionController::Base
   end
 
   def destroy
-    if @user && @user.destroy
+    if @user.destroy
       render json: { message: "Deleted"}, status: 204
     else
-      render json: { message: "Not found"}, status: 404
+      render json: { errors: @user.errors }, status: 400
     end
   end
 

@@ -199,6 +199,84 @@ paths:
           schema:
             $ref: '#/definitions/NotFoundResponse'
 
+    patch:
+      tags:
+      - transfer
+      summary: "Update an user's transfer"
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+
+      - name: user_id
+        in: path
+        required: true
+        type: integer
+
+      - account_number_from:
+        name: account_number_from
+        in: query
+        type: string
+
+      - account_number_to:
+        name: account_number_to
+        in: query
+        type: string
+
+      - country_code_from:
+        name: country_code_from
+        in: query
+        type: string
+
+      - country_code_to:
+        name: country_code_to
+        in: query
+        type: string
+
+      - amount_pennies:
+        name: amount_pennies
+        in: query
+        type: number
+        format: float
+
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/TransferResponse'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/NotFoundResponse'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+
+    delete:
+      tags:
+      - transfer
+      summary: "Destroy an user's transfer"
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        type: integer
+      - name: id
+        in: path
+        required: true
+        type: integer
+      responses:
+        204:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/DeletedResponse'
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/NotFoundResponse'
+
 definitions:
   UsersResponse:
     type: array

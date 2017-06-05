@@ -71,6 +71,36 @@ RSpec.describe TransfersController do
       it { expect(subject[:message]).to eql 'Transfer not found' }
 
     end
+  end
 
+  describe '#update' do
+    let!(:transfer) { create :transfer, user_id: user1.id }
+
+    context "perfect case" do
+      subject(:call_method) do
+        patch :update, { params: { user_id: user1.id, id: transfer.id,
+                                   account_number_from: "A" * 18 , account_number_to: "B" * 18 }}
+
+        JSON.parse(response.body, symbolize_names: true)
+      end
+
+      it { expect(Transfer.count).to eql 1}
+      it { expect(subject[:account_number_from]).to eql "A" * 18 }
+      it { expect(subject[:account_number_to]).to eql  "B" * 18 }
+    end
+  end
+
+  describe '#delete' do
+    let!(:transfer) { create :transfer, user_id: user1.id }
+
+    subject(:call_method) do
+      delete :destroy, { params: { id: transfer.id, user_id: user1.id }}
+      JSON.parse(response.body, symbolize_names: true)
+    end
+
+    it do
+      expect(subject[:message]).to eql 'Deleted'
+      expect(Transfer.all.count).to eql 0
+    end
   end
 end

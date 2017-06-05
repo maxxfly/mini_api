@@ -10,8 +10,30 @@ class TransfersController < ActionController::Base
     render json: @transfer
   end
 
+  def update
+    if @transfer.update_attributes(transfer_params)
+      render json: @transfer
+    else
+      render json: { errors: @transfer.errors }, status: 400
+    end
+  end
+
+  def destroy
+    if @transfer.destroy
+      render json: { message: "Deleted"}, status: 204
+    else
+      render json: { errors: @transfer.errors }, status: 400
+    end
+  end
 
   private
+  def transfer_params
+    params.permit(:account_number_from, :account_number_to,
+                  :country_code_from, :country_code_to,
+                  :amount_pennies)
+  end
+
+
   def load_user
     @user = User.find_by_id(params[:user_id])
 
