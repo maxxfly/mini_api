@@ -1,4 +1,6 @@
 class TransfersController < ActionController::Base
+  before_action :authenticate
+
   before_action :load_user
   before_action :load_transfer, only: [:update, :show, :destroy]
 
@@ -43,12 +45,23 @@ class TransfersController < ActionController::Base
                   :amount_pennies)
   end
 
+  def authenticate
+    unless params[:auth_token] && @current_user = User.find_by_authentication_token(params[:auth_token])
+      render json: { message: "Unauthorized"}, status: 401
+      return false
+    end
+  end
 
   def load_user
     @user = User.find_by_id(params[:user_id])
 
     unless @user
       render json: { message: "User not found"}, status: 404
+      return false
+    end
+
+    if @user != @current_user
+      render json: { message: "Forbidden"}, status: 403
       return false
     end
   end
@@ -61,5 +74,4 @@ class TransfersController < ActionController::Base
       return false
     end
   end
-
 end

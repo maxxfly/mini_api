@@ -193,6 +193,9 @@ paths:
         in: path
         required: true
         type: integer
+      - name: auth_token
+        in: query
+        type: string
       responses:
         200:
           description: Successful operation
@@ -203,6 +206,16 @@ paths:
           schema:
             $ref: '#/definitions/NotFoundResponse'
 
+        403:
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ForbiddenResponse'
+
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedResponse'
+
     post:
       tags:
       - transfer
@@ -212,6 +225,10 @@ paths:
         in: path
         required: true
         type: integer
+
+      - name: auth_token
+        in: query
+        type: string
 
       - account_number_from:
         name: account_number_from
@@ -254,6 +271,16 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
 
+        403:
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ForbiddenResponse'
+
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedResponse'
+
   /users/{user_id}/transfers/{id}:
     get:
       tags:
@@ -264,6 +291,9 @@ paths:
         in: path
         required: true
         type: integer
+      - name: auth_token
+        in: query
+        type: string
       - name: id
         in: path
         required: true
@@ -278,6 +308,16 @@ paths:
           schema:
             $ref: '#/definitions/NotFoundResponse'
 
+        403:
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ForbiddenResponse'
+
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedResponse'
+
     patch:
       tags:
       - transfer
@@ -287,6 +327,10 @@ paths:
         in: path
         required: true
         type: integer
+
+      - name: auth_token
+        in: query
+        type: string
 
       - name: user_id
         in: path
@@ -333,6 +377,16 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
 
+        403:
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ForbiddenResponse'
+
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedResponse'
+
     delete:
       tags:
       - transfer
@@ -342,6 +396,9 @@ paths:
         in: path
         required: true
         type: integer
+      - name: auth_token
+        in: query
+        type: string
       - name: id
         in: path
         required: true
@@ -355,6 +412,16 @@ paths:
           description: Not found
           schema:
             $ref: '#/definitions/NotFoundResponse'
+
+        403:
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ForbiddenResponse'
+
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedResponse'
 
 definitions:
   TokenResponse:
@@ -459,3 +526,10 @@ definitions:
       message:
         type: string
         example: 'Unauthorized'
+
+  ForbiddenResponse:
+    type: object
+    properties:
+      message:
+        type: string
+        example: 'Forbidden'

@@ -1,4 +1,7 @@
-Rails.application.routes.draw do  
+Rails.application.routes.draw do
+
+  devise_for :users 
+
   defaults format: :json do
     resources :sessions, only: [:create]
 
