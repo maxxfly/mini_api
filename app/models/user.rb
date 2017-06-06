@@ -2,14 +2,16 @@
 #
 # Table name: users
 #
-#  id             :integer          not null, primary key
-#  first_name     :string           not null
-#  last_name      :string           not null
-#  address_line_1 :string           not null
-#  dob            :date             not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#
+#  id                     :integer          not null, primary key
+#  first_name             :string           not null
+#  last_name              :string           not null
+#  address_line_1         :string           not null
+#  dob                    :date             not null
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  username               :string
+#  password               :string
+#  authentication_token   :string
 
 class User < ActiveRecord::Base
   has_many :transfers
